@@ -1,5 +1,6 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"scopeName": "source.oc-script",
 	"name": "OCScript",
 	"patterns": [
 		{
@@ -374,6 +375,5 @@
 			"name": "keyword.operator",
 			"match": "(++|--|~|!|+|-|\\*\\*|/|\\*|%|<<|>>|<|<=|>|>=|==|!=|&|\\^|&&|\\?\\?|\\|\\||\\*=|/=|%=|+=|-=|=)"
 		}
-	},
-	"scopeName": "source.oc"
+	}
 }

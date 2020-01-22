@@ -54,6 +54,7 @@
             {
                 "id": "ocs",
                 "aliases": [
+                    "OCScript",
                     "OpenClonk-Script",
                     "ocs"
                 ],
