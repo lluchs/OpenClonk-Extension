@@ -9,17 +9,78 @@
     "categories": [
         "Programming Languages"
     ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./out/extension.js",
     "contributes": {
-        "languages": [{
-            "id": "ocs",
-            "aliases": ["OpenClonk-Script", "ocs"],
-            "extensions": [".c"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "ocs",
-            "scopeName": "source.oc-script",
-            "path": "./syntaxes/ocs.tmLanguage.json"
-        }]
+        "configuration": {
+            "title": "OpenClonk Language",
+            "properties": {
+                "oclang.pathToC4gExecutable": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "format": "uri",
+                    "description": "Path to C4group Executable, which is used to pack/unpack .oc* files"
+                }
+            }
+        },
+        "commands": [
+            {
+                "command": "extension.unpackC4g",
+                "title": "Unpack"
+            },
+            {
+                "command": "extension.packC4g",
+                "title": "Pack"
+            }
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "command": "extension.packC4g"
+                },
+                {
+                    "command": "extension.unpackC4g"
+                }
+            ],
+            "commandPalette": []
+        },
+        "languages": [
+            {
+                "id": "ocs",
+                "aliases": [
+                    "OpenClonk-Script",
+                    "ocs"
+                ],
+                "extensions": [
+                    ".c"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "ocs",
+                "scopeName": "source.oc-script",
+                "path": "./syntaxes/ocs.tmLanguage.json"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.1.1",
+        "@types/node": "^12.11.7",
+        "@types/vscode": "^1.41.0",
+        "glob": "^7.1.5",
+        "tslint": "^5.20.0",
+        "typescript": "^3.6.4",
+        "vscode-test": "^1.2.2"
     }
 }
