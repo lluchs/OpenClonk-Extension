@@ -40,10 +40,12 @@
         "menus": {
             "explorer/context": [
                 {
-                    "command": "oc-ext.packC4g"
+                    "command": "oc-ext.packC4g",
+                    "when": "explorerResourceIsFolder == true"
                 },
                 {
-                    "command": "oc-ext.unpackC4g"
+                    "command": "oc-ext.unpackC4g",
+                    "when": "explorerResourceIsFolder == false"
                 }
             ],
             "commandPalette": []
