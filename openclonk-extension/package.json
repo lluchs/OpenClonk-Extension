@@ -1,0 +1,25 @@
+{
+    "name": "openclonk-extension",
+    "displayName": "OpenClonk Extension",
+    "description": "Development Tools for OpenClonk",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.41.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ocs",
+            "aliases": ["OpenClonk-Script", "ocs"],
+            "extensions": [".c"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "ocs",
+            "scopeName": "source.oc-script",
+            "path": "./syntaxes/ocs.tmLanguage.json"
+        }]
+    }
+}
