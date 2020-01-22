@@ -1,21 +1,350 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "OpenClonk-Script",
+	"name": "OCScript",
 	"patterns": [
 		{
-			"include": "#keywords"
+			"include": "#comments"
 		},
 		{
-			"include": "#strings"
+			"include": "#module"
+		},
+		{
+			"include": "#toplevelassignment"
+		},
+		{
+			"include": "#functionblock"
 		}
 	],
 	"repository": {
-		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.ocs",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+		"func_prop": {
+			"name": "meta.function",
+			"begin": "(func)\\s*(\\([\\w,\\s]*\\))",
+			"beginCaptures": {
+				"1": {
+					"name": "storage.type"
+				}
+			},
+			"end": "(?<=\\})",
+			"patterns": [
+				{
+					"include": "#funcclosure"
+				}
+			]
 		},
+		"functionblock": {
+			"name": "meta.function",
+			"begin": "(global\\s|public\\s|protected\\s|private\\s)?\\s*(func)\\s+([a-zA-Z]\\w*)\\s*(\\([\\w,\\s]*\\))",
+			"beginCaptures": {
+				"1": {
+					"name": "storage.modifier"
+				},
+				"2": {
+					"name": "storage.type"
+				},
+				"3": {
+					"name": "entity.name.function"
+				},
+				"4": {
+					"patterns": [
+						{
+							"include": "#params"
+						}
+					]
+				}
+			},
+			"end": "(?<=\\})",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#funcclosure"
+				}
+			]
+		},
+		"funcclosure": {
+			"begin": "{",
+			"end": "}",
+			"patterns": [
+				{
+					"include": "#funcbody"
+				}
+			]
+		},
+		"params": {
+			"name": "punctuation",
+			"begin": "\\(",
+			"end": "\\)",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#typedparam"
+				},
+				{
+					"match": "\\s*,\\s*",
+					"name": "punctuation"
+				}
+			]
+		},
+		"typedparam": {
+			"match": "(int|proplist|object|string|array|bool|any|dev|effect){1}\\s+([a-zA-Z]\\w*)",
+			"captures": {
+				"1": {
+					"name": "entity.name.type"
+				},
+				"2": {
+					"name": "variable.parameter"
+				}
+			}
+		},
+		"funcbody": {
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#strings"
+				},
+				{
+					"include": "#varexpr"
+				},
+				{
+					"include": "#statements"
+				}
+			]
+		},
+		"codeblock": {
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#strings"
+				},
+				{
+					"include": "#statements"
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"include": "#linecomment"
+				},
+				{
+					"include": "#blockcomment"
+				}
+			]
+		},
+		"toplevelassignment": {
+			"begin": "(static(\\s+const)?|local)(\\s+[_a-zA-Z][\\w_]*)\\s=?",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.type"
+				},
+				"3": {
+					"name": "variable.name"
+				}
+			},
+			"end": ";",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#expression"
+				}
+			]
+		},
+		"statements": {
+			"patterns": [
+				{
+					"include": "#ifstatement"
+				},
+				{
+					"include": "#returnstatement"
+				},
+				{
+					"include": "#methodexpr"
+				}
+			]
+		},
+		"expression": {
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#strings"
+				},
+				{
+					"include": "#constant"
+				},
+				{
+					"include": "#numbers"
+				},
+				{
+					"include": "#proplist"
+				},
+				{
+					"include": "#new_proplist"
+				},
+				{
+					"include": "#methodexpr"
+				}
+			]
+		},
+		"methodexpr": {
+			"begin": "([a-zA-Z_][\\w_]*)\\s*\\(",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.function"
+				}
+			},
+			"end": "\\)",
+			"patterns": [
+				{}
+			]
+		},
+		"varexpr": {
+			"begin": "(var)\\s+([a-zA-Z_][\\w_]*)(\\s*=)",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.type"
+				},
+				"2": {
+					"name": "variable.name"
+				}
+			},
+			"end": ";",
+			"patterns": [
+				{
+					"include": "#expression"
+				}
+			]
+		},
+		"numbers": {
+			"name": "constant.numeric",
+			"match": "[0-9]+"
+		},
+		"declarations": {
+			"name": "entity.name.type",
+			"match": "(var|const|static|local)"
+		},
+		"constant": {
+			"name": "constant.language",
+			"match": "(true|false|nil)"
+		},
+		"functions": {
+			"name": "constant.language",
+			"match": "(public|global|protected|private|func)"
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.ocs",
+					"match": "\\b(break|continue|for|while|return|else|if|in|this|new)\\b"
+				}
+			]
+		},
+		"new_proplist": {
+			"begin": "(new)\\s+([a-zA-Z][\\w_]*)",
+			"beginCaptures": {
+				"1": {
+					"name": "constant.language"
+				},
+				"2": {
+					"name": "entity.name"
+				}
+			},
+			"end": "(?<=\\})"
+		},
+		"proplist": {
+			"begin": "(\\{)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.paramters.begin"
+				}
+			},
+			"end": "(?<=\\})",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#propertydef"
+				}
+			]
+		},
+		"propertydef": {
+			"begin": "([a-zA-Z_][\\w_]*)\\s*=",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name"
+				}
+			},
+			"end": "(?:\\}|,)",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#func_prop"
+				},
+				{
+					"include": "#expression"
+				}
+			]
+		},
+		"ifstatement": {
+			"begin": "(if)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control"
+				}
+			},
+			"patterns": [
+				{
+					"begin": "\\(",
+					"end": "\\)",
+					"patterns": [
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"include": "#codeblock"
+				},
+				{
+					"include": "#statements"
+				}
+			],
+			"end": "(?<=\\}|;)"
+		},
+		"returnstatement": {
+			"begin": "(return)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control"
+				}
+			},
+			"end": ";",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#expression"
+				}
+			]
+		},
+		"whilestatement": {},
 		"strings": {
 			"name": "string.quoted.double.ocs",
 			"begin": "\"",
@@ -26,7 +355,25 @@
 					"match": "\\\\."
 				}
 			]
+		},
+		"blockcomment": {
+			"name": "comment.block",
+			"begin": "/\\*",
+			"end": "\\*/"
+		},
+		"linecomment": {
+			"name": "comment.line.double-dash",
+			"begin": "//",
+			"end": "$"
+		},
+		"module": {
+			"name": "keyword.control",
+			"match": "(#appendto|#include)"
+		},
+		"operators": {
+			"name": "keyword.operator",
+			"match": "(++|--|~|!|+|-|\\*\\*|/|\\*|%|<<|>>|<|<=|>|>=|==|!=|&|\\^|&&|\\?\\?|\\|\\||\\*=|/=|%=|+=|-=|=)"
 		}
 	},
-	"scopeName": "source.oc-script"
+	"scopeName": "source.oc"
 }
