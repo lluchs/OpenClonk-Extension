@@ -29,21 +29,21 @@
         },
         "commands": [
             {
-                "command": "extension.unpackC4g",
+                "command": "oc-ext.unpackC4g",
                 "title": "Unpack"
             },
             {
-                "command": "extension.packC4g",
+                "command": "oc-ext.packC4g",
                 "title": "Pack"
             }
         ],
         "menus": {
             "explorer/context": [
                 {
-                    "command": "extension.packC4g"
+                    "command": "oc-ext.packC4g"
                 },
                 {
-                    "command": "extension.unpackC4g"
+                    "command": "oc-ext.unpackC4g"
                 }
             ],
             "commandPalette": []
