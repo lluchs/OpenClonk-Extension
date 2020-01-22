@@ -1,3 +1,6 @@
+# tsc out
+openclonk-extension/out/
+
 # Logs
 logs
 *.log
