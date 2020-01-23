@@ -228,7 +228,9 @@
 			},
 			"end": "\\)",
 			"patterns": [
-				{}
+				{
+					"include": "#expression"
+				}
 			]
 		},
 		"varexpr": {
