@@ -44,23 +44,26 @@ export class C4GroupProvider implements IC4groupProvider {
         return new Promise<never>((resolve) => {
             exec(cmdString, (error, _stdout, _stderr) => {
                 if (error) {
-                    if (this.pathForExecutableExists()) {
-                        vscode.window.showErrorMessage('Failed to invoke C4Group-executable.');
-                        console.log(`Calling c4group by: ${cmdString}`);
-                        console.error(error);
-                    }
-                    else { 
-                        vscode.window.showErrorMessage('C4Group-executable could not be found. Please check your settings.');
-                    }
-                }
+                    this.pathForExecutableExists().then(executableExists => {
+                        if (executableExists) {
+                            vscode.window.showErrorMessage('Failed to invoke C4Group-executable.');
+                            console.log(`Calling c4group by: ${cmdString}`);
+                            console.error(error);
+                        }
+                        else {
+                            vscode.window.showErrorMessage('C4Group-executable could not be found. Please check your settings.');
+                        }
 
-                resolve();
+                        resolve();
+                    });
+                }
+                else
+                    resolve();
             });
         });
     }
 
-    private pathForExecutableExists(): Thenable<boolean>
-    {
+    private pathForExecutableExists(): Thenable<boolean> {
         const pathToExecutable = this.getPathToExecutable();
 
         if (!pathToExecutable)
@@ -68,6 +71,7 @@ export class C4GroupProvider implements IC4groupProvider {
 
         return new Promise((resolve) => {
             exists(pathToExecutable, (doesExist) => {
+                console.log(doesExist);
                 resolve(doesExist);
             })
         });
