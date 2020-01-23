@@ -133,19 +133,6 @@
 				}
 			]
 		},
-		"codeblock": {
-			"patterns": [
-				{
-					"include": "#comments"
-				},
-				{
-					"include": "#strings"
-				},
-				{
-					"include": "#statements"
-				}
-			]
-		},
 		"comments": {
 			"patterns": [
 				{
