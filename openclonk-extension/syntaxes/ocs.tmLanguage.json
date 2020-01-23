@@ -13,7 +13,7 @@
 			"include": "#toplevelassignment"
 		},
 		{
-			"include": "#functionblock"
+			"include": "#func_def"
 		}
 	],
 	"repository": {
@@ -42,9 +42,9 @@
 				}
 			]
 		},
-		"functionblock": {
+		"func_def": {
 			"name": "meta.function",
-			"begin": "(global\\s|public\\s|protected\\s|private\\s)?\\s*(func)\\s+([a-zA-Z]\\w*)\\s*(\\([\\w.,\\s]*\\))",
+			"begin": "(global\\s|public\\s|protected\\s|private\\s)?\\s*(func)",
 			"beginCaptures": {
 				"1": {
 					"name": "storage.modifier"
@@ -54,19 +54,15 @@
 				},
 				"3": {
 					"name": "entity.name.function"
-				},
-				"4": {
-					"patterns": [
-						{
-							"include": "#params"
-						}
-					]
 				}
 			},
 			"end": "(?<=\\})",
 			"patterns": [
 				{
 					"include": "#comments"
+				},
+				{
+					"include": "#params"
 				},
 				{
 					"include": "#funcclosure"
@@ -174,8 +170,8 @@
 				}
 			},
 			"end": "(;)",
-			"endCaptures": { 
-				"1" : {
+			"endCaptures": {
+				"1": {
 					"name": "punctuation.definition.semicolon"
 				}
 			},
