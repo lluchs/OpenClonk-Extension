@@ -184,7 +184,7 @@
 		"statements": {
 			"patterns": [
 				{
-					"include": "#ifstatement"
+					"include": "#control_structure"
 				},
 				{
 					"include": "#returnstatement"
@@ -270,7 +270,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.ocs",
-					"match": "\\b(break|continue|for|while|return|else|if|in|this|new)\\b"
+					"match": "\\b(break|continue|return|else|in|this|new)\\b"
 				}
 			]
 		},
@@ -335,14 +335,14 @@
 				}
 			]
 		},
-		"ifstatement": {
-			"begin": "(if)",
+		"control_structure": {
+			"begin": "(if|while|for)",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control"
 				}
 			},
-			"end": "(?<=\\))",
+			"end": "(?<=\\}|;)",
 			"patterns": [
 				{
 					"begin": "\\(",
