@@ -337,7 +337,7 @@
 					"name": "keyword.control"
 				}
 			},
-			"end": "(?<=\\}|;)",
+			"end": "(?<=\\))",
 			"patterns": [
 				{
 					"begin": "\\(",
@@ -353,12 +353,6 @@
 							"include": "#expression"
 						}
 					]
-				},
-				{
-					"include": "#codeblock"
-				},
-				{
-					"include": "#statements"
 				}
 			]
 		},
