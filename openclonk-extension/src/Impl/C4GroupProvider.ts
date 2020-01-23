@@ -43,6 +43,8 @@ export class C4GroupProvider implements IC4groupProvider {
             exec(cmdString, (error, _stdout, _stderr) => {
                 if (error) {
                     vscode.window.showErrorMessage('Failed to invoke c4group executable.');
+                    console.log(`Calling c4group by: ${cmdString}`);
+                    console.error(error);
                 }
 
                 resolve();
