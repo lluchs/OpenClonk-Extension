@@ -5,7 +5,6 @@ import { exec } from 'child_process';
 export class C4GroupProvider implements IC4groupProvider {
     public static ARG_EXPLODE = "-x";
     public static ARG_PACK = "-p";
-    public static PATH_TO_C4GROUP = `D:\\oc\\OpenClonk-win-x64\\c4group.exe`;
 
     public unpack(pathToFolder: string): Thenable<void> {
         if (this.canExecute()) {
@@ -27,8 +26,18 @@ export class C4GroupProvider implements IC4groupProvider {
         return true;
     }
 
+    private getPathToExecutable() {
+        return vscode.workspace.getConfiguration("oclang").get<string>("pathToC4gExecutable");
+    }
+
     private execute(args: string[]): Thenable<void> {
-        const cmdString = [C4GroupProvider.PATH_TO_C4GROUP, ...args].join(" ");
+        const pathToExecutable = this.getPathToExecutable();
+
+        if (!pathToExecutable) {
+            return Promise.resolve();
+        }
+
+        const cmdString = [pathToExecutable, ...args].join(" ");
 
         return new Promise<never>((resolve) => {
             exec(cmdString, (error, _stdout, _stderr) => {
