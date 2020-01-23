@@ -4,7 +4,7 @@ OpenClonk Extension for Visual Studio Code
 This package is currently under development and therefore not available in the extension store of VSCode.
 
 # Install
-Clone this repository into ~/User/vscode/extensions/.
+Clone this repository into ~/User/.vscode/extensions/
 Run:
 ```
 $ npm i
