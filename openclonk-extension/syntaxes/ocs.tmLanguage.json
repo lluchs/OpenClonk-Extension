@@ -206,6 +206,9 @@
 					"include": "#constant"
 				},
 				{
+					"include": "#keywords"
+				},
+				{
 					"include": "#numbers"
 				},
 				{
