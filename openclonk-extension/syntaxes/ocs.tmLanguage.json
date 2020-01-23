@@ -1,7 +1,7 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"scopeName": "source.oc-script",
-	"name": "OCScript",
+	"name": "OpenClonk",
 	"patterns": [
 		{
 			"include": "#comments"
@@ -34,7 +34,7 @@
 		},
 		"functionblock": {
 			"name": "meta.function",
-			"begin": "(global\\s|public\\s|protected\\s|private\\s)?\\s*(func)\\s+([a-zA-Z]\\w*)\\s*(\\([\\w,\\s]*\\))",
+			"begin": "(global\\s|public\\s|protected\\s|private\\s)?\\s*(func)\\s+([a-zA-Z]\\w*)\\s*(\\([\\w.,\\s]*\\))",
 			"beginCaptures": {
 				"1": {
 					"name": "storage.modifier"
@@ -86,6 +86,10 @@
 				{
 					"match": "\\s*,\\s*",
 					"name": "punctuation"
+				},
+				{
+					"match": "(\\.\\.\\.)",
+					"name": "keyword.operator.rest"
 				}
 			]
 		},
@@ -140,7 +144,7 @@
 			]
 		},
 		"toplevelassignment": {
-			"begin": "(static(\\s+const)?|local)(\\s+[_a-zA-Z][\\w_]*)\\s=?",
+			"begin": "(static(\\s+const)?|local)(\\s+[_a-zA-Z][\\w_]*)(\\s*=?)",
 			"beginCaptures": {
 				"1": {
 					"name": "entity.name.type"
@@ -149,7 +153,12 @@
 					"name": "variable.name"
 				}
 			},
-			"end": ";",
+			"end": "(;)",
+			"endCaptures": { 
+				"1" : {
+					"name": "punctuation.definition.semicolon"
+				}
+			},
 			"patterns": [
 				{
 					"include": "#comments"
@@ -222,7 +231,7 @@
 			"end": ";",
 			"patterns": [
 				{
-					"include": "#expression"
+					"include": "#statements"
 				}
 			]
 		},
@@ -251,7 +260,7 @@
 			]
 		},
 		"new_proplist": {
-			"begin": "(new)\\s+([a-zA-Z][\\w_]*)",
+			"begin": "(new)\\s+([a-zA-Z][\\w_]*)\\s+=",
 			"beginCaptures": {
 				"1": {
 					"name": "constant.language"
@@ -260,16 +269,22 @@
 					"name": "entity.name"
 				}
 			},
-			"end": "(?<=\\})"
+			"end": "(\\})"
 		},
 		"proplist": {
 			"begin": "(\\{)",
 			"beginCaptures": {
 				"1": {
-					"name": "punctuation.definition.paramters.begin"
+					"name": "punctuation.definition.proplist.begin"
 				}
 			},
-			"end": "(?<=\\})",
+			"contentName": "entity.proplist",
+			"end": "(\\})",
+			"endCaptures": {
+				"1": {
+					"name": "punction.definition.proplist.end"
+				}
+			},
 			"patterns": [
 				{
 					"include": "#comments"
@@ -306,6 +321,7 @@
 					"name": "keyword.control"
 				}
 			},
+			"end": "(?<=\\}|;)",
 			"patterns": [
 				{
 					"begin": "\\(",
@@ -313,6 +329,9 @@
 					"patterns": [
 						{
 							"include": "#comments"
+						},
+						{
+							"include": "#funcbody"
 						},
 						{
 							"include": "#expression"
@@ -325,8 +344,7 @@
 				{
 					"include": "#statements"
 				}
-			],
-			"end": "(?<=\\}|;)"
+			]
 		},
 		"returnstatement": {
 			"begin": "(return)",
