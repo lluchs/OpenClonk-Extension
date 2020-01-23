@@ -18,12 +18,10 @@
             "title": "OpenClonk Language",
             "properties": {
                 "oclang.pathToC4gExecutable": {
-                    "type": [
-                        "string",
-                        "null"
-                    ],
+                    "type": "string",
                     "format": "uri",
-                    "description": "Path to C4group Executable, which is used to pack/unpack .oc* files"
+                    "description": "Path to C4group Executable, which is used to pack/unpack .oc* files",
+                    "default": ""
                 }
             }
         },
