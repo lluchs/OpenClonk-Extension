@@ -1,6 +1,7 @@
 import { IC4groupProvider } from "../Ifaces/IC4GroupProvider";
 import * as vscode from 'vscode';
 import { exec } from 'child_process';
+import { exists } from 'fs';
 
 export class C4GroupProvider implements IC4groupProvider {
     public static ARG_EXPLODE = "-x";
@@ -34,6 +35,7 @@ export class C4GroupProvider implements IC4groupProvider {
         const pathToExecutable = this.getPathToExecutable();
 
         if (!pathToExecutable) {
+            vscode.window.showInformationMessage('Path to C4Group-executable is not set. Please update your settings.');
             return Promise.resolve();
         }
 
@@ -42,13 +44,32 @@ export class C4GroupProvider implements IC4groupProvider {
         return new Promise<never>((resolve) => {
             exec(cmdString, (error, _stdout, _stderr) => {
                 if (error) {
-                    vscode.window.showErrorMessage('Failed to invoke c4group executable.');
-                    console.log(`Calling c4group by: ${cmdString}`);
-                    console.error(error);
+                    if (this.pathForExecutableExists()) {
+                        vscode.window.showErrorMessage('Failed to invoke C4Group-executable.');
+                        console.log(`Calling c4group by: ${cmdString}`);
+                        console.error(error);
+                    }
+                    else { 
+                        vscode.window.showErrorMessage('C4Group-executable could not be found. Please check your settings.');
+                    }
                 }
 
                 resolve();
             });
+        });
+    }
+
+    private pathForExecutableExists(): Thenable<boolean>
+    {
+        const pathToExecutable = this.getPathToExecutable();
+
+        if (!pathToExecutable)
+            return Promise.resolve(false);
+
+        return new Promise((resolve) => {
+            exists(pathToExecutable, (doesExist) => {
+                resolve(doesExist);
+            })
         });
     }
 }
