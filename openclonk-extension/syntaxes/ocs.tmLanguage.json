@@ -190,7 +190,7 @@
 					"include": "#returnstatement"
 				},
 				{
-					"include": "#methodexpr"
+					"include": "#methodstatement"
 				}
 			]
 		},
@@ -219,6 +219,20 @@
 				},
 				{
 					"include": "#methodexpr"
+				}
+			]
+		},
+		"methodstatement": {
+			"begin": "([a-zA-Z_][\\w_]*)\\s*\\(",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.function"
+				}
+			},
+			"end": "\\)\\s*;",
+			"patterns": [
+				{
+					"include": "#expression"
 				}
 			]
 		},
