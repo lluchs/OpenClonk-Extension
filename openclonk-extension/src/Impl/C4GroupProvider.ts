@@ -35,7 +35,7 @@ export class C4GroupProvider implements IC4groupProvider {
         const pathToExecutable = this.getPathToExecutable();
 
         if (!pathToExecutable) {
-            vscode.window.showInformationMessage('Path to C4Group-executable is not set. Please update your settings.');
+            vscode.window.showInformationMessage('Path to C4Group-Executable is not set. Please update your settings.');
             return Promise.resolve();
         }
 
@@ -46,12 +46,12 @@ export class C4GroupProvider implements IC4groupProvider {
                 if (error) {
                     this.pathForExecutableExists().then(executableExists => {
                         if (executableExists) {
-                            vscode.window.showErrorMessage('Failed to invoke C4Group-executable.');
+                            vscode.window.showErrorMessage('Failed to invoke C4Group-Executable.');
                             console.log(`Calling c4group by: ${cmdString}`);
                             console.error(error);
                         }
                         else {
-                            vscode.window.showErrorMessage('C4Group-executable could not be found. Please check your settings.');
+                            vscode.window.showErrorMessage(`C4Group-Executable could not be found at: "${pathToExecutable}". Please check your settings.`);
                         }
 
                         resolve();
