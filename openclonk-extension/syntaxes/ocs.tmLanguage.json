@@ -19,23 +19,20 @@
 	"repository": {
 		"func_prop": {
 			"name": "meta.function",
-			"begin": "(func)\\s*(\\([\\w,.\\s]*\\))",
+			"begin": "(func)",
 			"beginCaptures": {
 				"1": {
 					"name": "storage.type"
-				},
-				"2": {
-					"patterns": [
-						{
-							"include": "#params"
-						}
-					]
 				}
 			},
+			"contentName": "ocs.proplist.function",
 			"end": "(?<=\\})",
 			"patterns": [
 				{
 					"include": "#comments"
+				},
+				{
+					"include": "#params"
 				},
 				{
 					"include": "#funcclosure"
@@ -212,10 +209,10 @@
 					"include": "#numbers"
 				},
 				{
-					"include": "#proplist"
+					"include": "#new_proplist"
 				},
 				{
-					"include": "#new_proplist"
+					"include": "#proplist"
 				},
 				{
 					"include": "#methodexpr"
@@ -276,16 +273,22 @@
 			]
 		},
 		"new_proplist": {
-			"begin": "(new)\\s+([a-zA-Z][\\w_]*)\\s+=",
+			"begin": "(new)\\s+([a-zA-Z][\\w_]*)",
 			"beginCaptures": {
 				"1": {
 					"name": "constant.language"
 				},
 				"2": {
-					"name": "entity.name"
+					"name": "entity.name.class"
 				}
 			},
-			"end": "(\\})"
+			"contentName": "entity.name.section.proplist",
+			"patterns": [
+				{
+					"include": "#proplist"
+				}
+			],
+			"end": "(?<=\\})"
 		},
 		"proplist": {
 			"begin": "(\\{)",
