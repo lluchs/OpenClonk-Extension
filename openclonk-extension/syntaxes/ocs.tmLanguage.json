@@ -19,14 +19,24 @@
 	"repository": {
 		"func_prop": {
 			"name": "meta.function",
-			"begin": "(func)\\s*(\\([\\w,\\s]*\\))",
+			"begin": "(func)\\s*(\\([\\w,.\\s]*\\))",
 			"beginCaptures": {
 				"1": {
 					"name": "storage.type"
+				},
+				"2": {
+					"patterns": [
+						{
+							"include": "#params"
+						}
+					]
 				}
 			},
 			"end": "(?<=\\})",
 			"patterns": [
+				{
+					"include": "#comments"
+				},
 				{
 					"include": "#funcclosure"
 				}
@@ -65,6 +75,16 @@
 		},
 		"funcclosure": {
 			"begin": "{",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.closure.begin"
+				}
+			},
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.closure.end"
+				}
+			},
 			"end": "}",
 			"patterns": [
 				{
