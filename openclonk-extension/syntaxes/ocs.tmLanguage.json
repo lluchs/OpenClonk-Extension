@@ -247,7 +247,7 @@
 			"end": ";",
 			"patterns": [
 				{
-					"include": "#statements"
+					"include": "#expression"
 				}
 			]
 		},
