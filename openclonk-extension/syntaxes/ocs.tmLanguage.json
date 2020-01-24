@@ -356,12 +356,12 @@
 							"include": "#comments"
 						},
 						{
-							"include": "#funcbody"
-						},
-						{
-							"include": "#expression"
+							"include": "funcbody"
 						}
 					]
+				},
+				{
+					"include": "#funcclosure"
 				}
 			]
 		},
