@@ -18,10 +18,20 @@
             "title": "OpenClonk Language",
             "properties": {
                 "oclang.pathToC4gExecutable": {
-                    "type": "string",
+                    "type": [
+                        "string",
+                        "null"
+                    ],
                     "format": "uri",
-                    "description": "Path to C4group Executable, which is used to pack/unpack .oc* files",
-                    "default": ""
+                    "description": "Path to C4group Executable, which is used to pack/unpack .oc* files"
+                },
+                "oclang.pathToGameExecutable": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "format": "uri",
+                    "description": "Path to Game Executable, which is used to run scenarios"
                 }
             }
         },
@@ -33,6 +43,10 @@
             {
                 "command": "oc-ext.packC4g",
                 "title": "Pack"
+            },
+            {
+                "command": "oc-ext.runScenarioInEditor",
+                "title": "Run in Editor"
             }
         ],
         "menus": {
@@ -44,6 +58,10 @@
                 {
                     "command": "oc-ext.unpackC4g",
                     "when": "explorerResourceIsFolder == false"
+                },
+                {
+                    "command": "oc-ext.runScenarioInEditor",
+                    "when": "resourceExtname == .ocs"
                 }
             ],
             "commandPalette": []
@@ -52,7 +70,6 @@
             {
                 "id": "ocs",
                 "aliases": [
-                    "OCScript",
                     "OpenClonk-Script",
                     "ocs"
                 ],
