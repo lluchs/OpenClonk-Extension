@@ -215,6 +215,9 @@
 					"include": "#methodexpr"
 				},
 				{
+					"include": "#array"
+				},
+				{
 					"include": "variable"
 				}
 			]
@@ -417,6 +420,34 @@
 				{
 					"name": "constant.character.escape.ocs",
 					"match": "\\\\."
+				}
+			]
+		},
+		"array": {
+			"name": "language.array",
+			"begin": "(\\[)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.array.beginning"
+				}
+			},
+			"contentName": "meta.array",
+			"end": "(\\])",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.array.end"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"name": "punctuation.array.separator",
+					"match": ","
+				},
+				{
+					"include": "#expression"
 				}
 			]
 		},
