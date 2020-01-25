@@ -377,6 +377,9 @@
 					]
 				},
 				{
+					"include": "#comments"
+				},
+				{
 					"include": "#funcclosure"
 				},
 				{
