@@ -349,7 +349,7 @@
 					"name": "keyword.control"
 				}
 			},
-			"end": "(?<=\\}|;)",
+			"end": "(?<=;|\\})",
 			"patterns": [
 				{
 					"begin": "\\(",
@@ -365,6 +365,9 @@
 				},
 				{
 					"include": "#funcclosure"
+				},
+				{
+					"include": "#statements"
 				}
 			]
 		},
