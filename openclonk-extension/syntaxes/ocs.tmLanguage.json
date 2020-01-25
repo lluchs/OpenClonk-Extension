@@ -243,6 +243,10 @@
 			"end": "\\)",
 			"patterns": [
 				{
+					"name": "punctuation.arguments.separator",
+					"match": ","
+				},
+				{
 					"include": "#expression"
 				}
 			]
