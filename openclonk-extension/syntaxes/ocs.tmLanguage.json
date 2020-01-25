@@ -236,6 +236,20 @@
 				}
 			]
 		},
+		"methodstatement": {
+			"begin": "([a-zA-Z_][\\w_]*)\\s*\\(",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.function"
+				}
+			},
+			"end": "\\)\\s*;",
+			"patterns": [
+				{
+					"include": "#expression"
+				}
+			]
+		},
 		"methodexpr": {
 			"begin": "([a-zA-Z_][\\w_]*)\\s*\\(",
 			"beginCaptures": {
@@ -379,7 +393,7 @@
 							"include": "#comments"
 						},
 						{
-							"include": "#expression"
+							"include": "funcbody"
 						}
 					]
 				},
