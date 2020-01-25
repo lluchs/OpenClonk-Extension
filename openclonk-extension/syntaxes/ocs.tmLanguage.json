@@ -323,7 +323,7 @@
 			"begin": "([a-zA-Z_][\\w_]*)\\s*=",
 			"beginCaptures": {
 				"1": {
-					"name": "entity.name"
+					"name": "variable.name"
 				}
 			},
 			"end": "(?:\\}|,)",
