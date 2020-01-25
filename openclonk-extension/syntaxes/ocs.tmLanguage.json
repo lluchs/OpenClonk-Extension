@@ -376,7 +376,7 @@
 							"include": "#comments"
 						},
 						{
-							"include": "funcbody"
+							"include": "#expression"
 						}
 					]
 				},
