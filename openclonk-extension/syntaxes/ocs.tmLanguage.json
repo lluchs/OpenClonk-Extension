@@ -70,7 +70,7 @@
 			]
 		},
 		"funcclosure": {
-			"begin": "{",
+			"begin": "(\\{)",
 			"beginCaptures": {
 				"1": {
 					"name": "punctuation.closure.begin"
@@ -81,7 +81,8 @@
 					"name": "punctuation.closure.end"
 				}
 			},
-			"end": "}",
+			"contentName": "meta.function",
+			"end": "(\\})",
 			"patterns": [
 				{
 					"include": "#funcbody"
@@ -127,6 +128,9 @@
 				},
 				{
 					"include": "#strings"
+				},
+				{
+					"include": "funcclosure"
 				},
 				{
 					"include": "#varexpr"
@@ -209,6 +213,9 @@
 				},
 				{
 					"include": "#methodexpr"
+				},
+				{
+					"include": "variable"
 				}
 			]
 		},
@@ -281,6 +288,11 @@
 				}
 			]
 		},
+		"variable": {
+			"disabled": 0,
+			"match": "([a-zA-Z][\\w_]*)",
+			"name": "variable.name"
+		},
 		"new_proplist": {
 			"begin": "(new)\\s+([a-zA-Z][\\w_]*)",
 			"beginCaptures": {
@@ -350,6 +362,7 @@
 				}
 			},
 			"end": "(?<=;|\\})",
+			"contentName": "meta.branch",
 			"patterns": [
 				{
 					"begin": "\\(",
