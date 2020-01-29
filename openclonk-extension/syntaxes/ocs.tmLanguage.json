@@ -133,7 +133,7 @@
 					"include": "funcclosure"
 				},
 				{
-					"include": "#varexpr"
+					"include": "#var_expr"
 				},
 				{
 					"include": "#statements"
@@ -257,7 +257,7 @@
 				}
 			]
 		},
-		"varexpr": {
+		"var_expr": {
 			"begin": "(var)\\s+([a-zA-Z_][\\w_]*)(\\s*=)?",
 			"beginCaptures": {
 				"1": {
@@ -406,7 +406,7 @@
 							"include": "funcclosure"
 						},
 						{
-							"include": "#varexpr"
+							"include": "#var_expr"
 						},
 						{
 							"include": "#method_expr"
