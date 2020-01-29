@@ -187,6 +187,9 @@
 					"include": "#this_statement"
 				},
 				{
+					"include": "#loop_control_statements"
+				},
+				{
 					"include": "#methodstatement"
 				}
 			]
@@ -483,6 +486,14 @@
 					"include": "#expression"
 				}
 			]
+		},
+		"loop_control_statements": {
+			"match": "(continue|break)\\s*;",
+			"captures": {
+				"1": {
+					"name": "keyword.control"
+				}
+			}
 		},
 		"whilestatement": {},
 		"strings": {
