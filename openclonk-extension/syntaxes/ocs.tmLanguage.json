@@ -215,7 +215,7 @@
 					"include": "#proplist"
 				},
 				{
-					"include": "#methodexpr"
+					"include": "#method_expr"
 				},
 				{
 					"include": "#array"
@@ -239,7 +239,7 @@
 				}
 			]
 		},
-		"methodexpr": {
+		"method_expr": {
 			"begin": "([a-zA-Z_][\\w_]*)\\s*\\(",
 			"beginCaptures": {
 				"1": {
@@ -409,7 +409,7 @@
 							"include": "#varexpr"
 						},
 						{
-							"include": "#methodexpr"
+							"include": "#method_expr"
 						}
 					]
 				},
@@ -458,7 +458,7 @@
 					"name": "punctuation.member"
 				},
 				{
-					"include": "#methodexpr"
+					"include": "#method_expr"
 				},
 				{
 					"match": "([a-zA-Z_][\\w_]*)",
