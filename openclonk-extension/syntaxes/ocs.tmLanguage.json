@@ -181,6 +181,9 @@
 					"include": "#control_structure"
 				},
 				{
+					"include": "#else"
+				},
+				{
 					"include": "#returnstatement"
 				},
 				{
@@ -400,6 +403,27 @@
 						}
 					]
 				},
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#funcclosure"
+				},
+				{
+					"include": "#statements"
+				}
+			]
+		},
+		"else": {
+			"begin": "(else)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control"
+				}
+			},
+			"end": "(?<=;|\\})",
+			"contentName": "meta.branch",
+			"patterns": [
 				{
 					"include": "#comments"
 				},
