@@ -181,9 +181,6 @@
 					"include": "#control_structure"
 				},
 				{
-					"include": "#else"
-				},
-				{
 					"include": "#returnstatement"
 				},
 				{
@@ -373,6 +370,16 @@
 			]
 		},
 		"control_structure": {
+			"patterns": [
+				{
+					"include": "#control_structure_with_parens"
+				},
+				{
+					"include": "#else"
+				}
+			]
+		},
+		"control_structure_with_parens": {
 			"begin": "(if|while|for)",
 			"beginCaptures": {
 				"1": {
