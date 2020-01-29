@@ -281,7 +281,7 @@
 		},
 		"constant": {
 			"name": "constant.language",
-			"match": "(true|false|nil)"
+			"match": "\\b(true|false|nil)\\b"
 		},
 		"functions": {
 			"name": "constant.language",
@@ -291,7 +291,15 @@
 			"patterns": [
 				{
 					"name": "keyword.control.ocs",
-					"match": "\\b(break|continue|return|else|in|this|new)\\b"
+					"match": "\\b(break|continue|return|else)\\b"
+				},
+				{
+					"name": "constant.language.ocs",
+					"match": "(in)"
+				},
+				{
+					"name": "constant.language.ocs",
+					"match": "(this)"
 				}
 			]
 		},
@@ -379,7 +387,16 @@
 							"include": "#comments"
 						},
 						{
-							"include": "funcbody"
+							"include": "#strings"
+						},
+						{
+							"include": "funcclosure"
+						},
+						{
+							"include": "#varexpr"
+						},
+						{
+							"include": "#methodexpr"
 						}
 					]
 				},
