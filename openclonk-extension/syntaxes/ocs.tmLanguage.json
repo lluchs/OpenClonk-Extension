@@ -184,6 +184,9 @@
 					"include": "#returnstatement"
 				},
 				{
+					"include": "#this_statement"
+				},
+				{
 					"include": "#methodstatement"
 				}
 			]
@@ -441,6 +444,28 @@
 					"include": "#statements"
 				}
 			]
+		},
+		"this_statement": {
+			"begin": "(this)",
+			"beginCaptures": {
+				"1": {
+					"name": "constant.language"
+				}
+			},
+			"patterns": [
+				{
+					"match": "(\\.)",
+					"name": "punctuation.member"
+				},
+				{
+					"include": "#methodexpr"
+				},
+				{
+					"match": "([a-zA-Z_][\\w_]*)",
+					"name": "variable.name"
+				}
+			],
+			"end": ";"
 		},
 		"returnstatement": {
 			"begin": "(return)",
