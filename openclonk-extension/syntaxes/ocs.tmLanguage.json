@@ -430,6 +430,12 @@
 				},
 				{
 					"include": "#statements"
+				},
+				{
+					"include": "#method_expr"
+				},
+				{
+					"include": "#expression"
 				}
 			]
 		},
