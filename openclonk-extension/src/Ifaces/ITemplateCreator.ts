@@ -1,7 +1,5 @@
-
+import { ITemplateDefinition } from "./ITemplateSelection";
 
 export interface ITemplateCreator {
-    createScenarioTemplate(): void;
-    createObjectTemplate(): void;
-    openTemplateCreation(pathToParent: string): void;
+    createFromTemplate(templateDef: ITemplateDefinition): Thenable<void>;
 }

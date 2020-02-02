@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('oc-ext.createScenario', ({ fsPath }) => {
-		templateCreator.openTemplateCreation(fsPath);
+		// templateCreator.openTemplateCreation(fsPath);
 	}));
 }
 
