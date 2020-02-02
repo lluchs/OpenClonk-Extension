@@ -45,6 +45,10 @@
                 "title": "Pack"
             },
             {
+                "command": "oc-ext.createScenario",
+                "title": "Create OC Item"
+            },
+            {
                 "command": "oc-ext.runScenarioInEditor",
                 "title": "Run in Editor"
             }
@@ -53,6 +57,10 @@
             "explorer/context": [
                 {
                     "command": "oc-ext.packC4g",
+                    "when": "explorerResourceIsFolder == true"
+                },
+                {
+                    "command": "oc-ext.createScenario",
                     "when": "explorerResourceIsFolder == true"
                 },
                 {
