@@ -30,9 +30,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(vscode.commands.registerCommand('oc-ext.createScenario', async ({ fsPath }) => {
 		const result = await templateSelection.selectTemplate();
-
+		
 		if (result) {
-			await templateCreator.createFromTemplate(result.templateDef, result.itemName, fsPath);
+			await templateCreator.createFromTemplate(result.templateDef, context.extensionPath, result.itemName, fsPath);
 			vscode.commands.executeCommand("workbench.files.action.refreshFilesExplorer");
 		}
 	}));

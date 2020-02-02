@@ -1,5 +1,9 @@
 import { ITemplateDefinition } from "./ITemplateSelection";
 
 export interface ITemplateCreator {
-    createFromTemplate(templateDef: ITemplateDefinition, itemName: string, pathToParent: string): Thenable<void>;
+    createFromTemplate(
+        templateDef: ITemplateDefinition,
+        extensionPath: string,
+        itemName: string,
+        pathToParent: string): Thenable<void>;
 }
