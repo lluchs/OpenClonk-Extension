@@ -16,6 +16,7 @@ $ npm run compile
 - [ ] Syntaxhighlighting for .c-Files
 - [x] (Un-)Packing of .oc*-Groups
 - [x] Running Scenarios
+- [x] Create OpenClonk files from templates
 
 # Features that might become targeted
 - Basic Completion-Provider
