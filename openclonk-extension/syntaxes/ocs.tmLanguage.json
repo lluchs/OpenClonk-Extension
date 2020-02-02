@@ -1,7 +1,7 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"scopeName": "source.oc-script",
-	"name": "OCScript",
+	"name": "OpenClonk",
 	"patterns": [
 		{
 			"include": "#comments"
@@ -13,28 +13,38 @@
 			"include": "#toplevelassignment"
 		},
 		{
-			"include": "#functionblock"
+			"include": "#func_def"
+		},
+		{
+			"include": "#funcclosure"
 		}
 	],
 	"repository": {
 		"func_prop": {
 			"name": "meta.function",
-			"begin": "(func)\\s*(\\([\\w,\\s]*\\))",
+			"begin": "(func)",
 			"beginCaptures": {
 				"1": {
 					"name": "storage.type"
 				}
 			},
+			"contentName": "ocs.proplist.function",
 			"end": "(?<=\\})",
 			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#params"
+				},
 				{
 					"include": "#funcclosure"
 				}
 			]
 		},
-		"functionblock": {
+		"func_def": {
 			"name": "meta.function",
-			"begin": "(global\\s|public\\s|protected\\s|private\\s)?\\s*(func)\\s+([a-zA-Z]\\w*)\\s*(\\([\\w,\\s]*\\))",
+			"begin": "(global\\s|public\\s|protected\\s|private\\s)?\\s*(func)\\s+([a-zA-Z][\\w_]*)",
 			"beginCaptures": {
 				"1": {
 					"name": "storage.modifier"
@@ -44,13 +54,6 @@
 				},
 				"3": {
 					"name": "entity.name.function"
-				},
-				"4": {
-					"patterns": [
-						{
-							"include": "#params"
-						}
-					]
 				}
 			},
 			"end": "(?<=\\})",
@@ -59,13 +62,27 @@
 					"include": "#comments"
 				},
 				{
+					"include": "#params"
+				},
+				{
 					"include": "#funcclosure"
 				}
 			]
 		},
 		"funcclosure": {
-			"begin": "{",
-			"end": "}",
+			"begin": "(\\{)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.closure.begin"
+				}
+			},
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.closure.end"
+				}
+			},
+			"contentName": "meta.function",
+			"end": "(\\})",
 			"patterns": [
 				{
 					"include": "#funcbody"
@@ -86,6 +103,10 @@
 				{
 					"match": "\\s*,\\s*",
 					"name": "punctuation"
+				},
+				{
+					"match": "(\\.\\.\\.)",
+					"name": "keyword.operator.rest"
 				}
 			]
 		},
@@ -109,20 +130,10 @@
 					"include": "#strings"
 				},
 				{
-					"include": "#varexpr"
+					"include": "funcclosure"
 				},
 				{
-					"include": "#statements"
-				}
-			]
-		},
-		"codeblock": {
-			"patterns": [
-				{
-					"include": "#comments"
-				},
-				{
-					"include": "#strings"
+					"include": "#var_expr"
 				},
 				{
 					"include": "#statements"
@@ -140,16 +151,21 @@
 			]
 		},
 		"toplevelassignment": {
-			"begin": "(static(\\s+const)?|local)(\\s+[_a-zA-Z][\\w_]*)\\s=?",
+			"begin": "(static(\\s+const)?|local)(\\s+[_a-zA-Z][\\w_]*)(\\s*=?)",
 			"beginCaptures": {
 				"1": {
-					"name": "entity.name.type"
+					"name": "constant.language"
 				},
 				"3": {
 					"name": "variable.name"
 				}
 			},
-			"end": ";",
+			"end": "(;)",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.semicolon"
+				}
+			},
 			"patterns": [
 				{
 					"include": "#comments"
@@ -162,13 +178,19 @@
 		"statements": {
 			"patterns": [
 				{
-					"include": "#ifstatement"
+					"include": "#control_structure"
 				},
 				{
 					"include": "#returnstatement"
 				},
 				{
-					"include": "#methodexpr"
+					"include": "#this_statement"
+				},
+				{
+					"include": "#loop_control_statements"
+				},
+				{
+					"include": "#methodstatement"
 				}
 			]
 		},
@@ -184,20 +206,46 @@
 					"include": "#constant"
 				},
 				{
-					"include": "#numbers"
+					"include": "#keywords"
 				},
 				{
-					"include": "#proplist"
+					"include": "#numbers"
 				},
 				{
 					"include": "#new_proplist"
 				},
 				{
-					"include": "#methodexpr"
+					"include": "#proplist"
+				},
+				{
+					"include": "#method_expr"
+				},
+				{
+					"include": "#array"
+				},
+				{
+					"include": "#operators"
+				},
+				{
+					"include": "#variable"
 				}
 			]
 		},
-		"methodexpr": {
+		"methodstatement": {
+			"begin": "([a-zA-Z_][\\w_]*)\\s*\\(",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.function"
+				}
+			},
+			"end": "\\)\\s*;",
+			"patterns": [
+				{
+					"include": "#expression"
+				}
+			]
+		},
+		"method_expr": {
 			"begin": "([a-zA-Z_][\\w_]*)\\s*\\(",
 			"beginCaptures": {
 				"1": {
@@ -206,14 +254,20 @@
 			},
 			"end": "\\)",
 			"patterns": [
-				{}
+				{
+					"name": "punctuation.arguments.separator",
+					"match": ","
+				},
+				{
+					"include": "#expression"
+				}
 			]
 		},
-		"varexpr": {
-			"begin": "(var)\\s+([a-zA-Z_][\\w_]*)(\\s*=)",
+		"var_expr": {
+			"begin": "(var)\\s+([a-zA-Z_][\\w_]*)(\\s*=)?",
 			"beginCaptures": {
 				"1": {
-					"name": "entity.name.type"
+					"name": "constant.language"
 				},
 				"2": {
 					"name": "variable.name"
@@ -231,12 +285,12 @@
 			"match": "[0-9]+"
 		},
 		"declarations": {
-			"name": "entity.name.type",
+			"name": "constant.language",
 			"match": "(var|const|static|local)"
 		},
 		"constant": {
 			"name": "constant.language",
-			"match": "(true|false|nil)"
+			"match": "\\b(true|false|nil)\\b"
 		},
 		"functions": {
 			"name": "constant.language",
@@ -246,9 +300,22 @@
 			"patterns": [
 				{
 					"name": "keyword.control.ocs",
-					"match": "\\b(break|continue|for|while|return|else|if|in|this|new)\\b"
+					"match": "\\b(break|continue|return|else)\\b"
+				},
+				{
+					"name": "constant.language.ocs",
+					"match": "(in)"
+				},
+				{
+					"name": "constant.language.ocs",
+					"match": "(this)"
 				}
 			]
+		},
+		"variable": {
+			"disabled": 0,
+			"match": "([a-zA-Z][\\w_]*)",
+			"name": "variable.name"
 		},
 		"new_proplist": {
 			"begin": "(new)\\s+([a-zA-Z][\\w_]*)",
@@ -257,19 +324,31 @@
 					"name": "constant.language"
 				},
 				"2": {
-					"name": "entity.name"
+					"name": "entity.name.class"
 				}
 			},
+			"contentName": "entity.name.section.proplist",
+			"patterns": [
+				{
+					"include": "#proplist"
+				}
+			],
 			"end": "(?<=\\})"
 		},
 		"proplist": {
 			"begin": "(\\{)",
 			"beginCaptures": {
 				"1": {
-					"name": "punctuation.definition.paramters.begin"
+					"name": "punctuation.definition.proplist.begin"
 				}
 			},
-			"end": "(?<=\\})",
+			"contentName": "entity.proplist",
+			"end": "(\\})",
+			"endCaptures": {
+				"1": {
+					"name": "punction.definition.proplist.end"
+				}
+			},
 			"patterns": [
 				{
 					"include": "#comments"
@@ -283,7 +362,7 @@
 			"begin": "([a-zA-Z_][\\w_]*)\\s*=",
 			"beginCaptures": {
 				"1": {
-					"name": "entity.name"
+					"name": "variable.name"
 				}
 			},
 			"end": "(?:\\}|,)",
@@ -299,13 +378,25 @@
 				}
 			]
 		},
-		"ifstatement": {
-			"begin": "(if)",
+		"control_structure": {
+			"patterns": [
+				{
+					"include": "#control_structure_with_parens"
+				},
+				{
+					"include": "#else"
+				}
+			]
+		},
+		"control_structure_with_parens": {
+			"begin": "(if|while|for)",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control"
 				}
 			},
+			"end": "(?<=;|\\})",
+			"contentName": "meta.branch",
 			"patterns": [
 				{
 					"begin": "\\(",
@@ -315,18 +406,81 @@
 							"include": "#comments"
 						},
 						{
+							"include": "#strings"
+						},
+						{
+							"include": "funcclosure"
+						},
+						{
+							"include": "#var_expr"
+						},
+						{
+							"include": "#method_expr"
+						},
+						{
 							"include": "#expression"
 						}
 					]
 				},
 				{
-					"include": "#codeblock"
+					"include": "#comments"
+				},
+				{
+					"include": "#funcclosure"
+				},
+				{
+					"include": "#statements"
+				},
+				{
+					"include": "#method_expr"
+				},
+				{
+					"include": "#expression"
+				}
+			]
+		},
+		"else": {
+			"begin": "(else)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control"
+				}
+			},
+			"end": "(?<=;|\\})",
+			"contentName": "meta.branch",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#funcclosure"
 				},
 				{
 					"include": "#statements"
 				}
+			]
+		},
+		"this_statement": {
+			"begin": "(this)",
+			"beginCaptures": {
+				"1": {
+					"name": "constant.language"
+				}
+			},
+			"patterns": [
+				{
+					"match": "(\\.)",
+					"name": "punctuation.member"
+				},
+				{
+					"include": "#method_expr"
+				},
+				{
+					"match": "([a-zA-Z_][\\w_]*)",
+					"name": "variable.name"
+				}
 			],
-			"end": "(?<=\\}|;)"
+			"end": ";"
 		},
 		"returnstatement": {
 			"begin": "(return)",
@@ -345,6 +499,14 @@
 				}
 			]
 		},
+		"loop_control_statements": {
+			"match": "(continue|break)\\s*;",
+			"captures": {
+				"1": {
+					"name": "keyword.control"
+				}
+			}
+		},
 		"whilestatement": {},
 		"strings": {
 			"name": "string.quoted.double.ocs",
@@ -354,6 +516,34 @@
 				{
 					"name": "constant.character.escape.ocs",
 					"match": "\\\\."
+				}
+			]
+		},
+		"array": {
+			"name": "language.array",
+			"begin": "(\\[)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.array.beginning"
+				}
+			},
+			"contentName": "meta.array",
+			"end": "(\\])",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.array.end"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"name": "punctuation.array.separator",
+					"match": ","
+				},
+				{
+					"include": "#expression"
 				}
 			]
 		},
@@ -373,7 +563,7 @@
 		},
 		"operators": {
 			"name": "keyword.operator",
-			"match": "(++|--|~|!|+|-|\\*\\*|/|\\*|%|<<|>>|<|<=|>|>=|==|!=|&|\\^|&&|\\?\\?|\\|\\||\\*=|/=|%=|+=|-=|=)"
+			"match": "(\\+\\+|--|~|!|\\+|-|\\*\\*|/|\\*|%|<<|>>|<|<=|>|>=|==|!=|&|\\^|&&|\\?\\?|\\|\\||\\*=|/=|%=|\\+=|-=|=,\\.\\.\\.)"
 		}
 	}
 }
