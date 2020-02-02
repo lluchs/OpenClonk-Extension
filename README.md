@@ -8,16 +8,14 @@ Clone this repository into ~/User/.vscode/extensions/
 Run:
 ```
 $ npm i
-```
-and
-```
+$ cd ./openclonk-extension/
 $ npm run compile
 ```
 
 # Targeted Features
 - [ ] Syntaxhighlighting for .c-Files
 - [x] (Un-)Packing of .oc*-Groups
-- [ ] Running Scenarios
+- [x] Running Scenarios
 
 # Features that might become targeted
 - Basic Completion-Provider
