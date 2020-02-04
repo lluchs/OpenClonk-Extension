@@ -9,7 +9,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    name: Build Vsix
     steps:
       - name: Start info 
         run: echo Build vsix job started
