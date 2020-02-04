@@ -17,8 +17,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 8.x
-    - run: npm install
+    - run: npm install --prefix openclonk-extension
     - run: npm run compile --prefix openclonk-extension
+    - run: npm run package --prefix openclonk-extension
 #     - run: npm test
 #       env:
 #         CI: true
