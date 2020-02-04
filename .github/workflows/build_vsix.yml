@@ -1,0 +1,21 @@
+name: Build Vsix
+
+on:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run prepublish
+      run: npm run vscode:prepublish
+    - name: Package VSIX
+      run: vsce package
+    - name: Run a multi-line script
+      run: |
+        echo End of build job reached
