@@ -18,7 +18,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: npm run compile
-    - run: npm test
-      env:
-        CI: true
+    - run: npm run compile --prefix openclonk-extension
+#     - run: npm test
+#       env:
+#         CI: true
