@@ -13,6 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const runScenarioProvider: IRunScenarioProvider = new RunScenarioProvider();
 	const templateCreator: ITemplateCreator = new TemplateCreator();
 	const templateSelection: ITemplateSelection = new TemplateSelection();
+	const outputChannel = vscode.window.createOutputChannel('OpenClonk');
 
 	context.subscriptions.push(vscode.commands.registerCommand('oc-ext.unpackC4g', ({ fsPath }) => {
 		provider.unpack(fsPath)
@@ -25,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('oc-ext.runScenarioInEditor', ({ fsPath }) => {
-		runScenarioProvider.runScenarioInEditorMode(fsPath);
+		runScenarioProvider.runScenarioInEditorMode(fsPath, outputChannel);
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('oc-ext.createScenario', async ({ fsPath }) => {

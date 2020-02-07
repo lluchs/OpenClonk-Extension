@@ -1,4 +1,5 @@
+import { OutputChannel } from "vscode";
 
 export interface IRunScenarioProvider {
-    runScenarioInEditorMode(pathToScenario: string): void;
+    runScenarioInEditorMode(pathToScenario: string, output: OutputChannel): void;
 }
