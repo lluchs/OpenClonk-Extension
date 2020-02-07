@@ -1,34 +1,44 @@
 import { IRunScenarioProvider } from "../Ifaces/IRunScenarioProvider";
-import { exec } from 'child_process';
+import { spawn } from 'child_process';
 import { exists } from 'fs';
-import * as vscode from 'vscode';
+import { OutputChannel, window, workspace } from "vscode";
 
 export class RunScenarioProvider implements IRunScenarioProvider {
-    public runScenarioInEditorMode(pathToScenario: string) {
+    public runScenarioInEditorMode(pathToScenario: string, outputChannel: OutputChannel) {
         const pathToExecutable = this.getPathToGameExecutable();
 
         if (!pathToExecutable) {
-            vscode.window.showInformationMessage('Path to OpenClonk executable is not set. Please update your settings.');
+            window.showInformationMessage('Path to OpenClonk executable is not set. Please update your settings.');
             return;
         }
 
-        this.execute([pathToScenario]);
+        this.execute([pathToScenario], outputChannel);
     }
 
-    private execute(args: string[]) {
+    private execute(args: string[], outputChannel: OutputChannel) {
         const pathToExecutable = this.getPathToGameExecutable();
 
         if (!pathToExecutable) {
-            vscode.window.showInformationMessage('Path to OpenClonk executable is not set. Please update your settings.');
+            window.showInformationMessage('Path to OpenClonk executable is not set. Please update your settings.');
             return;
         }
 
-        const cmdString = [pathToExecutable, ...args].join(" ");
+        const cprocess = spawn(pathToExecutable, args);
 
-        exec(cmdString, (err) => {
-            if (err) {
-                this.provideDiagnostics(err, cmdString);
-            }
+        cprocess.stdout.on('data', function (data) {
+            outputChannel.append(data.toString());
+        });
+
+        cprocess.stderr.on('data', function (data) {
+            outputChannel.append(data.toString());
+        });
+
+        // cprocess.on('exit', function (code) {
+        //     outputChannel.appendLine(`Process exited with code ${code == null ? "null" : code.toString()}`);
+        // });
+
+        cprocess.on('error', (err) => {
+            this.provideDiagnostics(err, [pathToExecutable, ...args].join(" "));
         });
     }
 
@@ -42,12 +52,12 @@ export class RunScenarioProvider implements IRunScenarioProvider {
                 console.error(err);
             }
             else {
-                vscode.window.showErrorMessage(`OpenClonk executable could not be found at: "${pathToExecutable}". Please check your settings.`);
+                window.showErrorMessage(`OpenClonk executable could not be found at: "${pathToExecutable}". Please check your settings.`);
             }
         });
     }
 
     private getPathToGameExecutable() {
-        return vscode.workspace.getConfiguration("oclang").get<string>("pathToGameExecutable");
+        return workspace.getConfiguration("oclang").get<string>("pathToGameExecutable");
     }
 }
