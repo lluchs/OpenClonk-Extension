@@ -44,7 +44,7 @@
 		},
 		"func_def": {
 			"name": "meta.function",
-			"begin": "(global\\s|public\\s|protected\\s|private\\s)?\\s*(func)\\s+([a-zA-Z][\\w_]*)",
+			"begin": "(global\\s|public\\s|protected\\s|private\\s)?\\s*(func)\\s+([a-zA-Z_][\\w_]*)",
 			"beginCaptures": {
 				"1": {
 					"name": "storage.modifier"
