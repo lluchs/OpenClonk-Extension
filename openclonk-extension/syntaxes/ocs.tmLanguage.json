@@ -227,7 +227,7 @@
 					"include": "#operators"
 				},
 				{
-					"include": "#variable"
+					"include": "#identifier"
 				}
 			]
 		},
@@ -312,12 +312,6 @@
 				}
 			]
 		},
-		"variable": {
-			"comment": "use identifier instead",
-			"disabled": 0,
-			"match": "([a-zA-Z][\\w_]*)",
-			"name": "variable.name"
-		},
 		"identifier": {
 			"disabled": 0,
 			"match": "([a-zA-Z_][\\w_]*)",
@@ -369,6 +363,9 @@
 				{
 					"name": "storage.modifier",
 					"match": "(func)"
+				},
+				{
+					"include": "#params"
 				},
 				{
 					"include": "#funcclosure"
