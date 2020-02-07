@@ -137,6 +137,9 @@
 				},
 				{
 					"include": "#statements"
+				},
+				{
+					"include": "#expression"
 				}
 			]
 		},
@@ -184,13 +187,7 @@
 					"include": "#returnstatement"
 				},
 				{
-					"include": "#this_statement"
-				},
-				{
 					"include": "#loop_control_statements"
-				},
-				{
-					"include": "#methodstatement"
 				}
 			]
 		},
@@ -273,7 +270,7 @@
 					"name": "variable.name"
 				}
 			},
-			"end": "(?:(;)|\\))",
+			"end": "(?:(;)|\\)|(?=in))",
 			"patterns": [
 				{
 					"include": "#expression"
@@ -354,13 +351,6 @@
 					"include": "#comments"
 				},
 				{
-					"include": "#identifier"
-				},
-				{
-					"name": "punction.definition.proplist",
-					"match": "(,|=)"
-				},
-				{
 					"name": "storage.modifier",
 					"match": "(func)"
 				},
@@ -369,6 +359,13 @@
 				},
 				{
 					"include": "#funcclosure"
+				},
+				{
+					"include": "#expression"
+				},
+				{
+					"name": "punction.definition.proplist",
+					"match": "(,|=)"
 				}
 			]
 		},
