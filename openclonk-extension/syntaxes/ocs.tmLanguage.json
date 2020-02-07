@@ -215,7 +215,7 @@
 					"include": "#new_proplist"
 				},
 				{
-					"include": "#proplist"
+					"include": "#loose_proplist"
 				},
 				{
 					"include": "#method_expr"
@@ -313,8 +313,14 @@
 			]
 		},
 		"variable": {
+			"comment": "use identifier instead",
 			"disabled": 0,
 			"match": "([a-zA-Z][\\w_]*)",
+			"name": "variable.name"
+		},
+		"identifier": {
+			"disabled": 0,
+			"match": "([a-zA-Z_][\\w_]*)",
 			"name": "variable.name"
 		},
 		"new_proplist": {
@@ -330,10 +336,44 @@
 			"contentName": "entity.name.section.proplist",
 			"patterns": [
 				{
-					"include": "#proplist"
+					"include": "#loose_proplist"
 				}
 			],
 			"end": "(?<=\\})"
+		},
+		"loose_proplist": {
+			"begin": "(\\{)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.proplist.begin"
+				}
+			},
+			"contentName": "entity.proplist",
+			"end": "(\\})",
+			"endCaptures": {
+				"1": {
+					"name": "punction.definition.proplist.end"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#identifier"
+				},
+				{
+					"name": "punction.definition.proplist",
+					"match": "(,|=)"
+				},
+				{
+					"name": "storage.modifier",
+					"match": "(func)"
+				},
+				{
+					"include": "#funcclosure"
+				}
+			]
 		},
 		"proplist": {
 			"begin": "(\\{)",
@@ -371,7 +411,8 @@
 					"include": "#comments"
 				},
 				{
-					"include": "#func_prop"
+					"name": "storage.type",
+					"match": "(func)"
 				},
 				{
 					"include": "#expression"
