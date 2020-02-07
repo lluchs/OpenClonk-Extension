@@ -273,7 +273,7 @@
 					"name": "variable.name"
 				}
 			},
-			"end": ";",
+			"end": "(?:(;)|\\))",
 			"patterns": [
 				{
 					"include": "#expression"
