@@ -3,6 +3,9 @@
     "displayName": "OpenClonk Extension",
     "description": "Development Tools for OpenClonk",
     "version": "0.1.0",
+    "repository": {
+        "url": "https://github.com/fmilke/OpenClonk-Extension"
+    },
     "engines": {
         "vscode": "^1.41.0"
     },
