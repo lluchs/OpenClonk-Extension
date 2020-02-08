@@ -1,4 +1,10 @@
-# OpenClonk Extension README
+# OpenClonk-Extension
+OpenClonk Extension for Visual Studio Code
 
-Extension for OpenClonk Content Development
-Some features of this extension require you to set paths to a c4group executable and an OpenClonk game executable in the vscode settings. 
+Please set paths to OpenClonk and C4Group up in VSCode settings.
+
+# Current Features
+- [x] Syntaxhighlighting for .c-Files
+- [x] (Un-)Packing of .oc*-Groups
+- [x] Running Scenarios
+- [x] Create OpenClonk files from templates
