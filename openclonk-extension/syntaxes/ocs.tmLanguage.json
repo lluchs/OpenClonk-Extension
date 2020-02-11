@@ -17,6 +17,10 @@
 		},
 		{
 			"include": "#funcclosure"
+		},
+		{
+			"name": "storage.modifier",
+			"match": "\\b(global|func|private|protected|public)\\b"
 		}
 	],
 	"repository": {
@@ -301,7 +305,7 @@
 				},
 				{
 					"name": "constant.language.ocs",
-					"match": "(in)"
+					"match": "(in)\\b"
 				},
 				{
 					"name": "constant.language.ocs",
