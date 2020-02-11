@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.2.1] - 2020-02-11
+## [0.1.1] - 2020-02-11
 ### Changed
 - Changed config settings prefices. You might update your settings.
 - Added top level maching for incomplete method declarations
