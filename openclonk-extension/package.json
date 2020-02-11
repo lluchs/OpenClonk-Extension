@@ -1,118 +1,123 @@
 {
-    "name": "openclonk-extension",
-    "displayName": "OpenClonk Extension",
-    "description": "Development Tools for OpenClonk",
-    "version": "0.1.0",
-    "repository": {
-        "url": "https://github.com/fmilke/OpenClonk-Extension"
-    },
-    "engines": {
-        "vscode": "^1.41.0"
-    },
-    "publisher": "fmilke",
-    "categories": [
-        "Programming Languages"
-    ],
-    "activationEvents": [
-        "*"
-    ],
-    "main": "./out/extension.js",
-    "contributes": {
-        "configuration": {
-            "title": "OpenClonk Language",
-            "properties": {
-                "oclang.pathToC4gExecutable": {
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "format": "uri",
-                    "description": "Path to C4group Executable, which is used to pack/unpack .oc* files"
-                },
-                "oclang.pathToGameExecutable": {
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "format": "uri",
-                    "description": "Path to Game Executable, which is used to run scenarios"
-                }
-            }
-        },
-        "commands": [
-            {
-                "command": "oc-ext.unpackC4g",
-                "title": "Unpack"
-            },
-            {
-                "command": "oc-ext.packC4g",
-                "title": "Pack"
-            },
-            {
-                "command": "oc-ext.createScenario",
-                "title": "Create OC Item"
-            },
-            {
-                "command": "oc-ext.runScenarioInEditor",
-                "title": "Run in Editor"
-            }
-        ],
-        "menus": {
-            "explorer/context": [
-                {
-                    "command": "oc-ext.packC4g",
-                    "when": "explorerResourceIsFolder == true"
-                },
-                {
-                    "command": "oc-ext.createScenario",
-                    "when": "explorerResourceIsFolder == true"
-                },
-                {
-                    "command": "oc-ext.unpackC4g",
-                    "when": "explorerResourceIsFolder == false"
-                },
-                {
-                    "command": "oc-ext.runScenarioInEditor",
-                    "when": "resourceExtname == .ocs"
-                }
-            ],
-            "commandPalette": []
-        },
-        "languages": [
-            {
-                "id": "ocs",
-                "aliases": [
-                    "OpenClonk-Script",
-                    "ocs"
-                ],
-                "extensions": [
-                    ".c"
-                ],
-                "configuration": "./language-configuration.json"
-            }
-        ],
-        "grammars": [
-            {
-                "language": "ocs",
-                "scopeName": "source.oc-script",
-                "path": "./syntaxes/ocs.tmLanguage.json"
-            }
-        ]
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "package": "vsce package",
-        "watch": "tsc -watch -p ./"
-    },
-    "devDependencies": {
-        "@types/glob": "^7.1.1",
-        "@types/node": "^12.11.7",
-        "@types/vscode": "^1.41.0",
-        "glob": "^7.1.5",
-        "tslint": "^5.20.0",
-        "typescript": "^3.6.4",
-        "vsce": "^1.73.0",
-        "vscode-test": "^1.2.2"
-    }
+	"name": "openclonk-extension",
+	"displayName": "OpenClonk Extension",
+	"description": "Development Tools for OpenClonk",
+	"version": "0.1.0",
+	"repository": {
+		"url": "https://github.com/fmilke/OpenClonk-Extension"
+	},
+	"engines": {
+		"vscode": "^1.41.0"
+	},
+	"publisher": "fmilke",
+	"categories": [
+		"Programming Languages"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"configuration": {
+			"title": "OpenClonk Language",
+			"properties": {
+				"oc-ext.pathToC4gExecutable": {
+					"type": [
+						"string",
+						"null"
+					],
+					"format": "uri",
+					"description": "Path to C4group Executable, which is used to pack/unpack .oc* files"
+				},
+				"oc-ext.pathToGameExecutable": {
+					"type": [
+						"string",
+						"null"
+					],
+					"format": "uri",
+					"description": "Path to Game Executable, which is used to run scenarios"
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "oc-ext.unpackC4g",
+				"title": "Unpack"
+			},
+			{
+				"command": "oc-ext.packC4g",
+				"title": "Pack"
+			},
+			{
+				"command": "oc-ext.createScenario",
+				"title": "Create OC Item"
+			},
+			{
+				"command": "oc-ext.runScenarioInEditor",
+				"title": "Run in Editor"
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"command": "oc-ext.packC4g",
+					"when": "explorerResourceIsFolder == true"
+				},
+				{
+					"command": "oc-ext.createScenario",
+					"when": "explorerResourceIsFolder == true"
+				},
+				{
+					"command": "oc-ext.unpackC4g",
+					"when": "explorerResourceIsFolder == false"
+				},
+				{
+					"command": "oc-ext.runScenarioInEditor",
+					"when": "resourceExtname == .ocs"
+				}
+			],
+			"commandPalette": []
+		},
+		"languages": [
+			{
+				"id": "ocs",
+				"aliases": [
+					"OpenClonk-Script",
+					"ocs"
+				],
+				"extensions": [
+					".c"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "ocs",
+				"scopeName": "source.oc-script",
+				"path": "./syntaxes/ocs.tmLanguage.json"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"package": "vsce package",
+		"watch": "tsc -watch -p ./"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.41.0",
+		"glob": "^7.1.5",
+		"tslint": "^5.20.0",
+		"typescript": "^3.6.4",
+		"vsce": "^1.73.0",
+		"vscode-test": "^1.2.2"
+	},
+	"__metadata": {
+		"id": "c3c9dbc5-2817-4993-8078-54549f0e8efe",
+		"publisherDisplayName": "Fridjof Milke",
+		"publisherId": "be34b0a0-7fa7-4527-a573-f2d253705b1d"
+	}
 }
