@@ -1,6 +1,7 @@
 import { IRunScenarioProvider } from "../Ifaces/IRunScenarioProvider";
 import { spawn } from 'child_process';
 import { exists } from 'fs';
+import * as path from 'path';
 import { OutputChannel, window, workspace } from "vscode";
 
 export class RunScenarioProvider implements IRunScenarioProvider {
@@ -12,18 +13,21 @@ export class RunScenarioProvider implements IRunScenarioProvider {
             return;
         }
 
-        this.execute([pathToScenario], outputChannel);
+        this.execute([`"${pathToScenario}"`], outputChannel);
     }
 
     private execute(args: string[], outputChannel: OutputChannel) {
         const pathToExecutable = this.getPathToGameExecutable();
-
+        
         if (!pathToExecutable) {
             window.showInformationMessage('Path to OpenClonk executable is not set. Please update your settings.');
             return;
         }
+        
+        const executableName = path.basename(pathToExecutable);
+        const cwd = pathToExecutable.substr(0, pathToExecutable.length - executableName.length);
 
-        const cprocess = spawn(pathToExecutable, args);
+        const cprocess = spawn(executableName, args, { cwd });
 
         cprocess.stdout.on('data', function (data) {
             outputChannel.append(data.toString());
@@ -58,6 +62,6 @@ export class RunScenarioProvider implements IRunScenarioProvider {
     }
 
     private getPathToGameExecutable() {
-        return workspace.getConfiguration("oclang").get<string>("pathToGameExecutable");
+        return workspace.getConfiguration("oc-ext").get<string>("pathToGameExecutable");
     }
 }

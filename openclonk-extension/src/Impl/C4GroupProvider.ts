@@ -2,6 +2,7 @@ import { IC4groupProvider } from "../Ifaces/IC4GroupProvider";
 import * as vscode from 'vscode';
 import { exec } from 'child_process';
 import { exists } from 'fs';
+import * as path from 'path';
 
 export class C4GroupProvider implements IC4groupProvider {
     public static ARG_EXPLODE = "-x";
@@ -9,7 +10,7 @@ export class C4GroupProvider implements IC4groupProvider {
 
     public unpack(pathToFolder: string): Thenable<void> {
         if (this.canExecute()) {
-            return this.execute([pathToFolder, C4GroupProvider.ARG_EXPLODE]);
+            return this.execute([`"${pathToFolder}"`, C4GroupProvider.ARG_EXPLODE]);
         }
 
         return Promise.resolve();
@@ -17,7 +18,7 @@ export class C4GroupProvider implements IC4groupProvider {
 
     public pack(pathToFolder: string): Thenable<void> {
         if (this.canExecute()) {
-            return this.execute([pathToFolder, C4GroupProvider.ARG_PACK]);
+            return this.execute([`"${pathToFolder}"`, C4GroupProvider.ARG_PACK]);
         }
 
         return Promise.resolve();
@@ -28,7 +29,7 @@ export class C4GroupProvider implements IC4groupProvider {
     }
 
     private getPathToExecutable() {
-        return vscode.workspace.getConfiguration("oclang").get<string>("pathToC4gExecutable");
+        return vscode.workspace.getConfiguration("oc-ext").get<string>("pathToC4gExecutable");
     }
 
     private execute(args: string[]): Thenable<void> {
@@ -39,10 +40,13 @@ export class C4GroupProvider implements IC4groupProvider {
             return Promise.resolve();
         }
 
-        const cmdString = [pathToExecutable, ...args].join(" ");
+        const executableName = path.basename(pathToExecutable);
+        const cwd = pathToExecutable.substr(0, pathToExecutable.length - executableName.length);
+
+        const cmdString = [executableName, ...args].join(" ");
 
         return new Promise<never>((resolve) => {
-            exec(cmdString, (error, _stdout, _stderr) => {
+            exec(cmdString, { cwd }, (error, _stdout, _stderr) => {
                 if (error) {
                     this.pathForExecutableExists().then(executableExists => {
                         if (executableExists) {
