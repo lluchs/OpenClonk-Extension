@@ -1,9 +1,10 @@
 # Change Log
 
-All notable changes to the "openclonk-extension" extension will be documented in this file.
+## [0.2.1] - 2020-02-11
+### Changed
+- Changed config settings prefices. You might update your settings.
+- Added top level maching for incomplete method declarations
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
-
-- Initial release
+### Fixed
+- Fixed word boundary matching for "in"
+- Fixed white spaces in paths to c4group or openclonk
