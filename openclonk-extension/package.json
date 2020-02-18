@@ -2,7 +2,7 @@
 	"name": "openclonk-extension",
 	"displayName": "OpenClonk Extension",
 	"description": "Development Tools for OpenClonk",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"repository": {
 		"url": "https://github.com/fmilke/OpenClonk-Extension"
 	},
