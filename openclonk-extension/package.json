@@ -29,18 +29,12 @@
 			"title": "OpenClonk Language",
 			"properties": {
 				"oc-ext.pathToC4gExecutable": {
-					"type": [
-						"string",
-						"null"
-					],
+					"type": "string",
 					"format": "uri",
 					"description": "Path to C4group Executable, which is used to pack/unpack .oc* files"
 				},
 				"oc-ext.pathToGameExecutable": {
-					"type": [
-						"string",
-						"null"
-					],
+					"type": "string",
 					"format": "uri",
 					"description": "Path to Game Executable, which is used to run scenarios"
 				}
