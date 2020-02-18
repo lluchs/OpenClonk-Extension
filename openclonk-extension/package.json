@@ -21,7 +21,10 @@
 		"Programming Languages"
 	],
 	"activationEvents": [
-		"*"
+		"onLanguage:ocs",
+		"workspaceContains:**/*.ocd",
+		"workspaceContains:**/*.ocs",
+		"workspaceContains:**/*.ocg"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
