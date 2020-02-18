@@ -12,6 +12,7 @@
 		"c4group",
 		"game"
 	],
+	"icon": "./images/icon.png",
 	"engines": {
 		"vscode": "^1.41.0"
 	},
