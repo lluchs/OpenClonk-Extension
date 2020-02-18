@@ -6,6 +6,12 @@
 	"repository": {
 		"url": "https://github.com/fmilke/OpenClonk-Extension"
 	},
+	"keywords": [
+		"clonk",
+		"openclonk",
+		"c4group",
+		"game"
+	],
 	"engines": {
 		"vscode": "^1.41.0"
 	},
