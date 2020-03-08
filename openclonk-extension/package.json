@@ -21,6 +21,13 @@
 		"configuration": {
 			"title": "OpenClonk Language",
 			"properties": {
+				"oc-ext.pathToOCLSPExecutable": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Path to oclsp executable, which is used for syntax checking"
+				},
 				"oc-ext.pathToC4gExecutable": {
 					"type": [
 						"string",
@@ -113,7 +120,8 @@
 		"tslint": "^5.20.0",
 		"typescript": "^3.6.4",
 		"vsce": "^1.73.0",
-		"vscode-test": "^1.2.2"
+		"vscode-test": "^1.2.2",
+		"vscode-languageclient": "^4.1.4"
 	},
 	"__metadata": {
 		"id": "c3c9dbc5-2817-4993-8078-54549f0e8efe",
